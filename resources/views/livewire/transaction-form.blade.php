@@ -12,7 +12,7 @@ new class extends Component {
     public string $type   = 'out';
     public string $source = 'contract';
     public string $status = 'settled'; // contract default = settled
-    public bool   $showSuccess = false;
+    public string $successMessage = '';
 
     public function mount(): void
     {
@@ -65,14 +65,14 @@ new class extends Component {
         $this->type   = 'out';
         $this->source = 'contract';
         $this->status = 'settled';
-        $this->showSuccess = true;
+        $this->successMessage = 'Transaction saved! All members have been notified.';
 
         // Tell the TransactionList to refresh
         $this->dispatch('transaction-saved');
     }
 }; ?>
 
-<div x-data="{ open: false }" x-init="$watch('open', v => { if(!v) $wire.showSuccess = false })">
+<div x-data="{ open: false }" x-init="$watch('open', v => { if(!v) $wire.successMessage = '' })">
 
     {{-- ── Mobile: Toggle Button ── --}}
     <div class="md:hidden mb-3">
@@ -117,7 +117,7 @@ new class extends Component {
         </div>
 
         {{-- Success flash --}}
-        @if($showSuccess)
+        @if($successMessage)
             <div class="mb-4 p-3 rounded-xl bg-green-50 border border-green-200 text-green-700
                         dark:bg-green-900/30 dark:border-green-700 dark:text-green-300 text-sm flex items-center gap-2">
                 <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20">
