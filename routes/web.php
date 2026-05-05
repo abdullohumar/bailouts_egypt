@@ -16,6 +16,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    // Monthly Report — visible to all authenticated users
+    Route::get('/report', function () {
+        return view('report');
+    })->name('report');
+
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
