@@ -18,4 +18,11 @@ export default {
     },
 
     plugins: [forms],
+
+    safelist: [
+        // Transaction row colors returned dynamically from PHP colorClass()
+        'text-green-500',
+        'text-orange-500',
+        'text-red-500',
+    ],
 };
