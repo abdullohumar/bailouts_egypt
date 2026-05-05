@@ -3,7 +3,6 @@
 use App\Models\Transaction;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
-use Livewire\Attributes\On;
 
 new class extends Component {
     use WithPagination;
@@ -11,8 +10,9 @@ new class extends Component {
     public string $search     = '';
     public string $filterType = '';
 
+    protected $listeners = ['transaction-saved' => 'refresh'];
+
     /** Refresh the list every time a new transaction is saved */
-    #[On('transaction-saved')]
     public function refresh(): void
     {
         $this->resetPage();
