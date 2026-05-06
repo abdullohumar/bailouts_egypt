@@ -31,7 +31,7 @@ new class extends Component {
     <div class="rounded-2xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
         <p class="text-xs font-semibold text-green-600 dark:text-green-400 uppercase tracking-wide mb-1">Total Income</p>
         <p class="text-lg font-bold text-green-700 dark:text-green-300 truncate">
-            Rp {{ number_format($totalIncome, 0, ',', '.') }}
+            EGP {{ number_format($totalIncome, 0, ',', '.') }}
         </p>
         <div class="mt-2 flex items-center gap-1 text-green-500">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@ new class extends Component {
     <div class="rounded-2xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4">
         <p class="text-xs font-semibold text-red-600 dark:text-red-400 uppercase tracking-wide mb-1">Total Expense</p>
         <p class="text-lg font-bold text-red-700 dark:text-red-300 truncate">
-            Rp {{ number_format($totalExpense, 0, ',', '.') }}
+            EGP {{ number_format($totalExpense, 0, ',', '.') }}
         </p>
         <div class="mt-2 flex items-center gap-1 text-red-400">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,7 +69,7 @@ new class extends Component {
             'text-indigo-700 dark:text-indigo-300' => $balance >= 0,
             'text-orange-700 dark:text-orange-300' => $balance < 0,
         ])>
-            {{ $balance >= 0 ? '+' : '' }}Rp {{ number_format($balance, 0, ',', '.') }}
+            {{ $balance >= 0 ? '+' : '' }}EGP {{ number_format($balance, 0, ',', '.') }}
         </p>
         <div @class(['mt-2 flex items-center gap-1',
             'text-indigo-400' => $balance >= 0,
@@ -87,7 +87,7 @@ new class extends Component {
     <div class="rounded-2xl bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-4">
         <p class="text-xs font-semibold text-yellow-600 dark:text-yellow-400 uppercase tracking-wide mb-1">Pending Reimb.</p>
         <p class="text-lg font-bold text-yellow-700 dark:text-yellow-300 truncate">
-            Rp {{ number_format($pendingAmount, 0, ',', '.') }}
+            EGP {{ number_format($pendingAmount, 0, ',', '.') }}
         </p>
         <div class="mt-2 flex items-center gap-1 text-yellow-500">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

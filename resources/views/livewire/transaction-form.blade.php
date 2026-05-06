@@ -163,7 +163,7 @@ new class extends Component {
             {{-- Amount + Date --}}
             <div class="grid grid-cols-2 gap-3">
                 <div>
-                    <x-input-label for="tf_amount" value="Amount (Rp) *" />
+                    <x-input-label for="tf_amount" value="Amount (EGP) *" />
                     <x-text-input id="tf_amount" wire:model="amount" type="number" min="1"
                         class="mt-1 block w-full {{ $errors->has('amount') ? 'border-red-400 dark:border-red-500 ring-1 ring-red-400' : '' }}"
                         placeholder="5000000" />

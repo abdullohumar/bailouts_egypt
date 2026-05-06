@@ -72,7 +72,7 @@
     {{-- Amount + Date --}}
     <div class="grid grid-cols-2 gap-3">
         <div>
-            <x-input-label for="tf_amount" value="Amount (Rp) *" />
+            <x-input-label for="tf_amount" value="Amount (EGP) *" />
             <x-text-input
                 id="tf_amount"
                 wire:model="amount"

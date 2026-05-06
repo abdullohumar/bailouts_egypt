@@ -55,6 +55,6 @@ class Transaction extends Model
      */
     public function formattedAmount(): string
     {
-        return 'Rp ' . number_format($this->amount, 0, ',', '.');
+        return 'EGP ' . number_format($this->amount, 0, ',', '.');
     }
 }

@@ -146,7 +146,7 @@ new class extends Component {
                 <div class="min-w-0">
                     <p class="text-xs text-green-600 dark:text-green-400 font-medium uppercase tracking-wide">Total Income</p>
                     <p class="text-lg font-bold text-green-700 dark:text-green-300 truncate">
-                        Rp {{ number_format($totalIncome, 0, ',', '.') }}
+                        EGP {{ number_format($totalIncome, 0, ',', '.') }}
                     </p>
                 </div>
             </div>
@@ -161,7 +161,7 @@ new class extends Component {
                 <div class="min-w-0">
                     <p class="text-xs text-red-600 dark:text-red-400 font-medium uppercase tracking-wide">Total Expense</p>
                     <p class="text-lg font-bold text-red-700 dark:text-red-300 truncate">
-                        Rp {{ number_format($totalExpense, 0, ',', '.') }}
+                        EGP {{ number_format($totalExpense, 0, ',', '.') }}
                     </p>
                 </div>
             </div>
@@ -197,7 +197,7 @@ new class extends Component {
                         'text-indigo-700 dark:text-indigo-300' => $balance >= 0,
                         'text-orange-700 dark:text-orange-300' => $balance < 0,
                     ])>
-                        {{ $balance >= 0 ? '+' : '' }}Rp {{ number_format($balance, 0, ',', '.') }}
+                        {{ $balance >= 0 ? '+' : '' }}EGP {{ number_format($balance, 0, ',', '.') }}
                     </p>
                 </div>
             </div>
@@ -212,7 +212,7 @@ new class extends Component {
                     <div class="flex items-start justify-between gap-2 mb-1.5">
                         <span class="text-xs text-gray-400">{{ $tx->transaction_date->format('d M Y') }}</span>
                         <span class="font-bold text-sm {{ $tx->colorClass() }} whitespace-nowrap">
-                            {{ $tx->type === 'in' ? '+' : '-' }}Rp {{ number_format($tx->amount, 0, ',', '.') }}
+                            {{ $tx->type === 'in' ? '+' : '-' }}EGP {{ number_format($tx->amount, 0, ',', '.') }}
                         </span>
                     </div>
                     <p class="text-sm font-semibold {{ $tx->colorClass() }} leading-snug mb-2">{{ $tx->description }}</p>
@@ -278,7 +278,7 @@ new class extends Component {
                                 ])>{{ $tx->status }}</span>
                             </td>
                             <td class="px-4 py-3 text-right font-bold {{ $tx->colorClass() }} whitespace-nowrap">
-                                {{ $tx->type === 'in' ? '+' : '-' }}Rp {{ number_format($tx->amount, 0, ',', '.') }}
+                                {{ $tx->type === 'in' ? '+' : '-' }}EGP {{ number_format($tx->amount, 0, ',', '.') }}
                             </td>
                         </tr>
                     @empty
@@ -298,7 +298,7 @@ new class extends Component {
                             Total Income
                         </td>
                         <td class="px-4 py-3 text-right font-bold text-green-600 dark:text-green-400 whitespace-nowrap">
-                            +Rp {{ number_format($totalIncome, 0, ',', '.') }}
+                            +EGP {{ number_format($totalIncome, 0, ',', '.') }}
                         </td>
                     </tr>
                     <tr>
@@ -306,7 +306,7 @@ new class extends Component {
                             Total Expense
                         </td>
                         <td class="px-4 py-3 text-right font-bold text-red-600 dark:text-red-400 whitespace-nowrap">
-                            -Rp {{ number_format($totalExpense, 0, ',', '.') }}
+                            -EGP {{ number_format($totalExpense, 0, ',', '.') }}
                         </td>
                     </tr>
                     <tr class="border-t border-gray-300 dark:border-gray-600">
@@ -318,7 +318,7 @@ new class extends Component {
                             'text-indigo-600 dark:text-indigo-400' => $balance >= 0,
                             'text-orange-600 dark:text-orange-400' => $balance < 0,
                         ])>
-                            {{ $balance >= 0 ? '+' : '' }}Rp {{ number_format($balance, 0, ',', '.') }}
+                            {{ $balance >= 0 ? '+' : '' }}EGP {{ number_format($balance, 0, ',', '.') }}
                         </td>
                     </tr>
                 </tfoot>
@@ -331,11 +331,11 @@ new class extends Component {
         <div class="md:hidden no-print mt-4 rounded-2xl border border-gray-200 dark:border-gray-700 divide-y divide-gray-100 dark:divide-gray-700 overflow-hidden">
             <div class="flex justify-between items-center px-4 py-3 bg-white dark:bg-gray-800">
                 <span class="text-sm text-green-600 dark:text-green-400 font-medium">Total Income</span>
-                <span class="font-bold text-green-600 dark:text-green-400">+Rp {{ number_format($totalIncome, 0, ',', '.') }}</span>
+                <span class="font-bold text-green-600 dark:text-green-400">+EGP {{ number_format($totalIncome, 0, ',', '.') }}</span>
             </div>
             <div class="flex justify-between items-center px-4 py-3 bg-white dark:bg-gray-800">
                 <span class="text-sm text-red-600 dark:text-red-400 font-medium">Total Expense</span>
-                <span class="font-bold text-red-600 dark:text-red-400">-Rp {{ number_format($totalExpense, 0, ',', '.') }}</span>
+                <span class="font-bold text-red-600 dark:text-red-400">-EGP {{ number_format($totalExpense, 0, ',', '.') }}</span>
             </div>
             <div @class([
                 'flex justify-between items-center px-4 py-3',
@@ -349,7 +349,7 @@ new class extends Component {
                 <span @class(['font-bold text-base',
                     'text-indigo-700 dark:text-indigo-300' => $balance >= 0,
                     'text-orange-700 dark:text-orange-300' => $balance < 0,
-                ])>{{ $balance >= 0 ? '+' : '' }}Rp {{ number_format($balance, 0, ',', '.') }}</span>
+                ])>{{ $balance >= 0 ? '+' : '' }}EGP {{ number_format($balance, 0, ',', '.') }}</span>
             </div>
         </div>
         @endif
