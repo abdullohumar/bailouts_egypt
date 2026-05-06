@@ -11,18 +11,13 @@ new class extends Component {
     public string $password_confirmation = '';
     public string $successMessage = '';
 
-    protected function rules(): array
+    public function createMember(): void
     {
-        return [
+        $this->validate([
             'name'     => ['required', 'string', 'max:255'],
             'email'    => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ];
-    }
-
-    public function createMember(): void
-    {
-        $this->validate();
+        ]);
 
         User::create([
             'name'     => $this->name,

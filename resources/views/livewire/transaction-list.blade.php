@@ -127,8 +127,7 @@ new class extends Component {
                     {{-- Settle button: Admin only, personal+pending --}}
                     @if(auth()->user()->isAdmin() && $tx->type === 'out' && $tx->source === 'personal' && $tx->status === 'pending')
                         <button
-                            wire:click="settle({{ $tx->id }})"
-                            wire:confirm="Mark this transaction as Settled?"
+                            x-on:click="confirm('Mark this transaction as Settled?') && $wire.settle({{ $tx->id }})"
                             class="ml-auto inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-semibold
                                    bg-indigo-600 hover:bg-indigo-700 text-white transition active:scale-95 shadow-sm"
                         >
@@ -198,8 +197,7 @@ new class extends Component {
                         <td class="px-4 py-3 text-center">
                             @if(auth()->user()->isAdmin() && $tx->type === 'out' && $tx->source === 'personal' && $tx->status === 'pending')
                                 <button
-                                    wire:click="settle({{ $tx->id }})"
-                                    wire:confirm="Mark '{{ addslashes($tx->description) }}' as Settled?"
+                                    x-on:click="confirm('Mark this as Settled?') && $wire.settle({{ $tx->id }})"
                                     wire:loading.attr="disabled"
                                     class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold
                                            bg-indigo-600 hover:bg-indigo-700 text-white transition active:scale-95 shadow-sm

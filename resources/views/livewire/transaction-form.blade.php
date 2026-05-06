@@ -29,21 +29,16 @@ new class extends Component {
         $this->status = ($value === 'personal') ? 'pending' : 'settled';
     }
 
-    protected function rules(): array
+    public function save(): void
     {
-        return [
+        $this->validate([
             'description'      => ['required', 'string', 'max:255'],
             'amount'           => ['required', 'numeric', 'min:1'],
             'transaction_date' => ['required', 'date'],
             'type'             => ['required', 'in:in,out'],
             'source'           => ['required', 'in:contract,personal'],
             'status'           => ['required', 'in:pending,settled'],
-        ];
-    }
-
-    public function save(): void
-    {
-        $this->validate();
+        ]);
 
         $transaction = Transaction::create([
             'user_id'          => auth()->id(),
