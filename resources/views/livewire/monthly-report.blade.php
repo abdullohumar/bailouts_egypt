@@ -44,83 +44,97 @@ new class extends Component {
     ════════════════════════════════ --}}
     <style>
         @media print {
-            /* Hide ALL app chrome */
-            body > * { display: none !important; }
-            #print-area, #print-area * { display: revert !important; }
+            /*
+             * VISIBILITY TRICK (fixes blank page):
+             * visibility:visible on #print-area children CAN override
+             * an ancestor's visibility:hidden — unlike display:none which cannot.
+             */
+            body * { visibility: hidden !important; }
+            #print-area,
+            #print-area * { visibility: visible !important; }
+
+            /* Elements marked no-print stay completely gone */
             .no-print { display: none !important; }
 
+            /* Pin print area to page top-left */
             #print-area {
-                position: fixed; inset: 0;
-                background: white; color: #111;
+                position: absolute; left: 0; top: 0;
+                width: 100%; background: white !important; color: #111 !important;
                 font-family: 'Segoe UI', Arial, sans-serif;
-                font-size: 11.5px; padding: 28px 36px;
+                font-size: 11.5px; padding: 28px 36px; box-sizing: border-box;
             }
 
-            /* ── Header ── */
+            /* Show PDF header section (hidden on screen via inline style="display:none") */
+            .pdf-print-wrapper { display: block !important; }
+
+            /* Show desktop table (has Tailwind 'hidden md:block' on screen) */
+            .desktop-table-wrap { display: block !important; }
+
+            /* Force colors/backgrounds to print (Chrome blocks them by default) */
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+            /* ── PDF Header ── */
             .pdf-header {
-                display: flex !important;
-                align-items: flex-start;
+                display: flex !important; align-items: flex-start;
                 justify-content: space-between;
-                border-bottom: 3px solid #4f46e5;
+                border-bottom: 3px solid #4f46e5 !important;
                 padding-bottom: 14px; margin-bottom: 16px;
             }
             .pdf-logo-row { display: flex !important; align-items: center; gap: 14px; }
             .pdf-logo-box {
                 width: 50px; height: 50px; border-radius: 12px;
-                background: #4f46e5;
-                display: flex !important; align-items: center; justify-content: center;
+                background: #4f46e5 !important;
+                display: flex !important; align-items: center; justify-content: center; flex-shrink: 0;
             }
             .pdf-logo-box svg { width: 28px; height: 28px; }
-            .pdf-org-name { font-size: 19px; font-weight: 800; color: #1e1b4b; }
-            .pdf-org-sub  { font-size: 10px; color: #6b7280; margin-top: 2px; }
+            .pdf-org-name { font-size: 19px; font-weight: 800; color: #1e1b4b !important; }
+            .pdf-org-sub  { font-size: 10px; color: #6b7280 !important; margin-top: 2px; }
             .pdf-meta { text-align: right; }
-            .pdf-meta-label  { font-size: 9px; font-weight: 700; color: #4f46e5; text-transform: uppercase; letter-spacing: 1px; }
-            .pdf-meta-period { font-size: 17px; font-weight: 800; color: #111827; margin-top: 3px; }
-            .pdf-meta-date   { font-size: 9px; color: #9ca3af; margin-top: 4px; }
+            .pdf-meta-label  { font-size: 9px; font-weight: 700; color: #4f46e5 !important; text-transform: uppercase; letter-spacing: 1px; }
+            .pdf-meta-period { font-size: 17px; font-weight: 800; color: #111827 !important; margin-top: 3px; }
+            .pdf-meta-date   { font-size: 9px; color: #9ca3af !important; margin-top: 4px; }
 
             /* ── Summary cards ── */
             .pdf-cards { display: flex !important; gap: 10px; margin-bottom: 18px; }
             .pdf-card  { flex: 1; border-radius: 8px; padding: 11px 13px; border-width: 1px; border-style: solid; }
             .pdf-card-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
             .pdf-card-val { font-size: 14px; font-weight: 800; }
-            .pdf-c-in  { background:#f0fdf4; border-color:#bbf7d0; }
-            .pdf-c-in  .pdf-card-lbl, .pdf-c-in  .pdf-card-val { color:#15803d; }
-            .pdf-c-out { background:#fef2f2; border-color:#fecaca; }
-            .pdf-c-out .pdf-card-lbl, .pdf-c-out .pdf-card-val { color:#b91c1c; }
-            .pdf-c-bal { background:#eef2ff; border-color:#c7d2fe; }
-            .pdf-c-bal .pdf-card-lbl, .pdf-c-bal .pdf-card-val { color:#3730a3; }
-            .pdf-c-neg { background:#fff7ed; border-color:#fed7aa; }
-            .pdf-c-neg .pdf-card-lbl, .pdf-c-neg .pdf-card-val { color:#c2410c; }
+            .pdf-c-in  { background: #f0fdf4 !important; border-color: #bbf7d0 !important; }
+            .pdf-c-in  .pdf-card-lbl, .pdf-c-in  .pdf-card-val { color: #15803d !important; }
+            .pdf-c-out { background: #fef2f2 !important; border-color: #fecaca !important; }
+            .pdf-c-out .pdf-card-lbl, .pdf-c-out .pdf-card-val { color: #b91c1c !important; }
+            .pdf-c-bal { background: #eef2ff !important; border-color: #c7d2fe !important; }
+            .pdf-c-bal .pdf-card-lbl, .pdf-c-bal .pdf-card-val { color: #3730a3 !important; }
+            .pdf-c-neg { background: #fff7ed !important; border-color: #fed7aa !important; }
+            .pdf-c-neg .pdf-card-lbl, .pdf-c-neg .pdf-card-val { color: #c2410c !important; }
 
             /* ── Table ── */
-            table  { width:100%; border-collapse:collapse; }
+            table { width: 100%; border-collapse: collapse; }
             thead th {
-                background:#4f46e5; color:white;
-                padding:7px 8px; font-size:9px;
-                font-weight:700; text-transform:uppercase;
-                letter-spacing:.5px; text-align:left;
+                background: #4f46e5 !important; color: white !important;
+                padding: 7px 8px; font-size: 9px; font-weight: 700;
+                text-transform: uppercase; letter-spacing: .5px; text-align: left;
             }
-            tbody td { padding:6px 8px; border-bottom:1px solid #e5e7eb; font-size:11px; }
-            tbody tr:nth-child(even) td { background:#f9fafb; }
-            tfoot td { padding:7px 8px; font-weight:700; font-size:11px; border-top:2px solid #4f46e5; }
-            .text-right { text-align:right !important; }
-            .text-center{ text-align:center !important; }
-
-            /* Color helpers */
-            .c-green  { color:#15803d !important; }
-            .c-red    { color:#b91c1c !important; }
-            .c-orange { color:#c2410c !important; }
-            .c-indigo { color:#3730a3 !important; }
+            tbody td { padding: 6px 8px; border-bottom: 1px solid #e5e7eb !important; font-size: 11px; }
+            tbody tr:nth-child(even) td { background: #f9fafb !important; }
+            tfoot td { padding: 7px 8px; font-weight: 700; font-size: 11px; border-top: 2px solid #4f46e5 !important; }
+            .text-right  { text-align: right !important; }
+            .text-center { text-align: center !important; }
+            .c-green  { color: #15803d !important; }
+            .c-red    { color: #b91c1c !important; }
+            .c-orange { color: #c2410c !important; }
+            .c-indigo { color: #3730a3 !important; }
 
             /* ── Footer ── */
             .pdf-footer {
-                display:flex !important; justify-content:space-between;
-                margin-top:18px; padding-top:8px;
-                border-top:1px solid #e5e7eb;
-                font-size:9px; color:#9ca3af;
+                display: flex !important; justify-content: space-between;
+                margin-top: 18px; padding-top: 8px;
+                border-top: 1px solid #e5e7eb !important;
+                font-size: 9px; color: #9ca3af !important;
             }
         }
     </style>
+
 
     <div id="print-area">
 
@@ -160,7 +174,8 @@ new class extends Component {
         {{-- ════════════════════════════════
              PDF HEADER  (only on print)
         ════════════════════════════════ --}}
-        <div class="hidden print:block">
+        {{-- screen: display:none via CSS media query; print: display:block --}}
+        <div style="display:none" class="pdf-print-wrapper">
 
             <div class="pdf-header">
                 {{-- Left: logo + org name --}}
@@ -313,7 +328,7 @@ new class extends Component {
         {{-- ══════════════════════════════
              DESKTOP + PRINT TABLE
         ══════════════════════════════ --}}
-        <div class="hidden md:block overflow-x-auto rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+        <div class="hidden md:block desktop-table-wrap overflow-x-auto rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm">
                 <thead class="bg-gray-50 dark:bg-gray-900">
                     <tr>
